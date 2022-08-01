@@ -25,6 +25,8 @@ class invalidCharacterException {};
 
 class invalidRangeException {};
 
+class caseConversionException {};
+
 // ********************
 //      PROTOTYPES
 // ********************
@@ -38,7 +40,7 @@ char character(char, int);
 int main() {
 	char newChar;
 	try {
-		newChar = character('a', 2);
+		newChar = character('A', 32);
 		cout << newChar << endl;
 	}
 	catch (invalidCharacterException) {
@@ -46,6 +48,9 @@ int main() {
 	}
 	catch (invalidRangeException) {
 		cout << "Invalid Range Exception Thrown!" << endl;
+	}
+	catch (caseConversionException) {
+		cout << "Case Conversion Exception Thrown!" << endl;
 	}
 
 	cout << "Thank you for using my program!";
@@ -61,10 +66,19 @@ int main() {
 char character(char start, int offset) {
 	int startAsciiValue = int(start);
 	int end = startAsciiValue + offset;
+
+	// checks for invalid characters
 	if ((startAsciiValue > 90 && startAsciiValue < 97) || startAsciiValue > 122 || startAsciiValue < 65) {
 		throw invalidCharacterException();
 	}
-
+	// checks if the end is now not an alpha character
+	else if (((end > 90 && end < 97) || end > 122 || end < 65)) {
+		throw invalidRangeException();
+	}
+	// checks if the case had been converted from lowercase to uppercase or vice versa
+	else if ((startAsciiValue >= 65 && startAsciiValue <= 90 && end >= 97 && end <= 122) || (end >= 65 && end <= 90 && startAsciiValue >= 97 && startAsciiValue <= 122)) {
+		throw caseConversionException();
+	}
 
 	return char(end);
 }
