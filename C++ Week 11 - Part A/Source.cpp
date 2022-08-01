@@ -1,7 +1,7 @@
 // Donovan Green
 // CIS 1202
 // 7-31-2022
-
+// Exceptions test
 
 #include<iostream>
 #include<stdio.h>
@@ -39,9 +39,14 @@ char character(char, int);
 
 int main() {
 	char newChar;
+	char userChar;
+	int userOffset;
+	cout << "Character conversion:" << endl;
+	cout << "\nPlease enter the starting character: "; cin >> userChar;
+	cout << "Please enter the offset:             "; cin >> userOffset;
 	try {
-		newChar = character('A', 32);
-		cout << newChar << endl;
+		newChar = character(userChar, userOffset);
+		cout << "The new character is:                " << newChar << endl;
 	}
 	catch (invalidCharacterException) {
 		cout << "Invalid Character Exception Thrown!" << endl;
