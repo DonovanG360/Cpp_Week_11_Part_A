@@ -17,6 +17,14 @@
 
 using namespace std;
 
+// ***************************
+//      EXCEPTION CLASSES
+// ***************************
+
+class invalidCharacterException {};
+
+class invalidRangeException {};
+
 // ********************
 //      PROTOTYPES
 // ********************
@@ -29,8 +37,16 @@ char character(char, int);
 
 int main() {
 	char newChar;
-	newChar = character('a', 2);
-	cout << newChar;
+	try {
+		newChar = character('a', 2);
+		cout << newChar << endl;
+	}
+	catch (invalidCharacterException) {
+		cout << "Invalid Character Exception Thrown!" << endl;
+	}
+	catch (invalidRangeException) {
+		cout << "Invalid Range Exception Thrown!" << endl;
+	}
 
 	cout << "Thank you for using my program!";
 	cout << "\n\n";
@@ -45,6 +61,10 @@ int main() {
 char character(char start, int offset) {
 	int startAsciiValue = int(start);
 	int end = startAsciiValue + offset;
+	if ((startAsciiValue > 90 && startAsciiValue < 97) || startAsciiValue > 122 || startAsciiValue < 65) {
+		throw invalidCharacterException();
+	}
+
 
 	return char(end);
 }
